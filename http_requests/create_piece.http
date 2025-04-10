@@ -1,0 +1,12 @@
+POST localhost:8080/api/games/1/pieces
+Content-Type: application/json
+
+{
+  "position": {
+    "row": 1,
+    "column": 2
+  },
+  "kind": "Bishop"
+}
+
+###

@@ -3,6 +3,7 @@ import sbt.librarymanagement.ModuleID
 
 object Dependencies {
   private val tapirVersion = "1.11.23"
+  private val ironVersion  = "3.0.0"
 
   private val config = Seq(
     "com.typesafe"           % "config"          % "1.4.3",
@@ -24,7 +25,9 @@ object Dependencies {
   )
 
   lazy val iron: Seq[ModuleID] = Seq(
-    "io.github.iltotore" %% "iron" % "3.0.0"
+    "io.github.iltotore"          %% "iron"          % ironVersion,
+    "com.softwaremill.sttp.tapir" %% "tapir-iron"    % "1.11.24",
+    "io.github.iltotore"          %% "iron-zio-json" % ironVersion
   )
 
   val application: Seq[ModuleID] = zio ++ tapir ++ iron
