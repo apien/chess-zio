@@ -10,8 +10,11 @@ object Dependencies {
   )
 
   lazy val zio: Seq[ModuleID] = Seq(
-    "dev.zio" %% "zio"       % "2.1.17",
-    "dev.zio" %% "zio-kafka" % "2.7.4"
+    "dev.zio" %% "zio"               % "2.1.17",
+    "dev.zio" %% "zio-kafka"         % "2.7.4",
+    "dev.zio" %% "zio-test"          % "2.1.17" % Test,
+    "dev.zio" %% "zio-test-sbt"      % "2.1.17" % Test,
+    "dev.zio" %% "zio-test-magnolia" % "2.1.17" % Test
   )
 
   lazy val tapir: Seq[ModuleID] = Seq(
@@ -20,6 +23,10 @@ object Dependencies {
     "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-bundle" % tapirVersion
   )
 
-  val application: Seq[ModuleID] = zio ++ tapir
+  lazy val iron: Seq[ModuleID] = Seq(
+    "io.github.iltotore" %% "iron" % "3.0.0"
+  )
+
+  val application: Seq[ModuleID] = zio ++ tapir ++ iron
   val client: Seq[ModuleID]      = config ++ zio
 }
