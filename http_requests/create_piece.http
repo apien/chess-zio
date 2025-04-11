@@ -1,10 +1,10 @@
-POST localhost:8080/api/games/1/pieces
+POST localhost:8080/api/games/G1/pieces
 Content-Type: application/json
 
 {
   "position": {
-    "row": 1,
-    "column": 2
+    "column": 1,
+    "row": 0
   },
   "kind": "Bishop"
 }

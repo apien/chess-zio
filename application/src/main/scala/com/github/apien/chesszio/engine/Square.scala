@@ -9,7 +9,8 @@ import io.github.iltotore.iron.*
 import io.github.iltotore.iron.constraint.all.*
 import io.github.iltotore.iron.zioJson.given
 import sttp.tapir.codec.iron.*
-
+import sttp.tapir.codec.iron.given
+import sttp.tapir.codec.iron.*
 type Row = Row.T
 
 object Row extends RefinedType[Int, DescribedAs[Closed[0, 7], "Row index should be in range <0,7>"]] {

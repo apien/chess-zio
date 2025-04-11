@@ -1,18 +1,14 @@
 package com.github.apien.chesszio.api
 
-import com.github.apien.chesszio.PieceSquare
 import com.github.apien.chesszio.api.ErrorInfo.*
-import com.github.apien.chesszio.engine.{GameId, Piece, PieceId, Row, Square}
-import io.github.iltotore.iron.*
-import io.github.iltotore.iron.constraint.all.*
-import io.github.iltotore.iron.zioJson.given
+import com.github.apien.chesszio.api.model.{CreatePoundApiRequest, PieceWithSquare}
+import com.github.apien.chesszio.engine.*
 import sttp.model.StatusCode
-import sttp.tapir.codec.iron.*
+import sttp.tapir.SchemaType.SInteger
 import sttp.tapir.generic.auto.*
 import sttp.tapir.json.zio.jsonBody
 import sttp.tapir.ztapir.*
-import sttp.tapir.{Endpoint, EndpointOutput, endpoint}
-import zio.json.*
+import sttp.tapir.{Endpoint, EndpointOutput, Schema, endpoint}
 import zio.{ULayer, ZLayer}
 
 class ChessEndpoints {
@@ -25,39 +21,42 @@ class ChessEndpoints {
     oneOfVariant(statusCode(StatusCode.InternalServerError).and(jsonBody[InternalServerError]))
   )
 
+  // TODO I can not force iron-tapir to derive schema.
+  implicit given Schema[Row] = Schema(SInteger())
+  implicit given Schema[Column] = Schema(SInteger())
+
   private val baseGameEndpoint: Endpoint[Unit, GameId, ErrorInfo, Unit, Any] = endpoint
     .errorOut(defaultErrorOutputs)
-    .in("api" / "games" / path[GameId])
+    .in("api" / "games" / path[GameId].name("gameId"))
 
   private val basePoundEndpoint = baseGameEndpoint.in("pieces")
 
   val createPieceEndpoint =
-    basePoundEndpoint.post
-      .in(jsonBody[CreatePoundRequest])
-      .out(jsonBody[Piece])
+    basePoundEndpoint
+      .summary("Put a new piece on a board")
+      .post
+      .in(jsonBody[CreatePoundApiRequest])
+      .out(jsonBody[PieceWithSquare])
 
-  val movePieceEndpoint: Endpoint[Unit, (GameId, PieceId, Position), ErrorInfo, Unit, Any] =
+  val movePieceEndpoint: Endpoint[Unit, (GameId, PieceId, Square), ErrorInfo, Unit, Any] =
     basePoundEndpoint.put
+      .summary("Move a piece")
       .in(path[PieceId].name("pieceId"))
-      .in(jsonBody[Position])
+      .in(jsonBody[Square])
+      .out(statusCode(StatusCode.NoContent))
 
   val deletePieceEndpoint: Endpoint[Unit, (GameId, PieceId), ErrorInfo, Unit, Any] =
     basePoundEndpoint
+      .summary("Mark a piece as deleted")
       .in(path[PieceId].name("pieceId"))
       .delete
 
-  val getPiece: Endpoint[Unit, (GameId, PieceId), ErrorInfo, Piece, Any] =
+  val getPieceEndpoint: Endpoint[Unit, (GameId, PieceId), ErrorInfo, PieceWithSquare, Any] =
     basePoundEndpoint
+      .summary("Get a select piece")
       .in(path[PieceId].name("pieceId"))
       .get
-      .out(jsonBody[Piece])
-
-
-//    val fooEndpoint =
-//      basePoundEndpoint.post
-//        .in(jsonBody[CreatePoundRequest])
-//        .out(jsonBody[Row])
-
+      .out(jsonBody[PieceWithSquare])
 }
 
 object ChessEndpoints {
