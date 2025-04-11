@@ -1,0 +1,11 @@
+PUT localhost:8080/api/games/G1/pieces/f19b3d77-2796-4c35-8efc-e1451aef4662
+Content-Type: application/json
+
+
+{
+  "column": 0,
+  "row": 0
+}
+
+
+###

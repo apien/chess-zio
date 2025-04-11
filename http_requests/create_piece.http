@@ -3,10 +3,10 @@ Content-Type: application/json
 
 {
   "position": {
-    "column": 1,
+    "column": 0,
     "row": 0
   },
-  "kind": "Bishop"
+  "kind": "Rok"
 }
 
 ###

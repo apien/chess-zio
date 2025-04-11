@@ -31,7 +31,7 @@ class ChessEndpoints {
 
   private val basePoundEndpoint = baseGameEndpoint.in("pieces")
 
-  val createPieceEndpoint =
+  val createPieceEndpoint: Endpoint[Unit, (GameId, CreatePoundApiRequest), ErrorInfo, PieceWithSquare, Any] =
     basePoundEndpoint
       .summary("Put a new piece on a board")
       .post
