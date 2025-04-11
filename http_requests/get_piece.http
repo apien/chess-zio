@@ -1,0 +1,4 @@
+GET localhost:8080/api/games/G1/pieces/e8c27d57-2679-4652-8de0-28f8ac4ce818
+Content-Type: application/json
+
+###

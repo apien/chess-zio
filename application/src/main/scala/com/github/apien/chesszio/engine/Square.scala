@@ -3,7 +3,14 @@ import io.github.iltotore.iron.*
 import io.github.iltotore.iron.constraint.all.*
 import io.github.iltotore.iron.constraint.numeric.*
 import io.github.iltotore.iron.constraint.numeric.Interval.Closed
+import zio.json.*
 
+import io.github.iltotore.iron.*
+import io.github.iltotore.iron.constraint.all.*
+import io.github.iltotore.iron.zioJson.given
+import sttp.tapir.codec.iron.*
+import sttp.tapir.codec.iron.given
+import sttp.tapir.codec.iron.*
 type Row = Row.T
 
 object Row extends RefinedType[Int, DescribedAs[Closed[0, 7], "Row index should be in range <0,7>"]] {
@@ -28,7 +35,6 @@ object Row extends RefinedType[Int, DescribedAs[Closed[0, 7], "Row index should 
     }
   }
 }
-
 
 type Column = Column.T
 
@@ -58,6 +64,10 @@ object Column extends RefinedType[Int, DescribedAs[Closed[0, 7], "Colum index sh
 case class Square(column: Column, row: Row)
 
 object Square {
+  given encoder: JsonEncoder[Square] = DeriveJsonEncoder.gen[Square]
+  given decoder: JsonDecoder[Square] = DeriveJsonDecoder.gen[Square]
+//  given jsonCodec: JsonCodec[Square] = DeriveJsonCodec.gen
+
   def attempt(column: Int, row: Int): Option[Square] = for {
     column <- Column.option(column)
     row    <- Row.option(row)

@@ -7,7 +7,7 @@ import zio.{Scope, UIO, ZIO, ZIOAppArgs, ZIOAppDefault, ZLayer}
   This is only test code, made to make testing easier. Please do not use it in production or use it as an example.
  */
 object ClientApp extends ZIOAppDefault with AppConfiguration {
-  override def run: ZIO[Any with ZIOAppArgs with Scope, Any, Any] = consumerStream
+  override def run: ZIO[Any & ZIOAppArgs & Scope, Any, Any] = consumerStream
 
   private val consumerSettings: ConsumerSettings =
     ConsumerSettings(List(configuration.kafka.address))

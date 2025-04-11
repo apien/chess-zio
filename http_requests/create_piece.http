@@ -1,0 +1,12 @@
+POST localhost:8080/api/games/G1/pieces
+Content-Type: application/json
+
+{
+  "position": {
+    "column": 0,
+    "row": 0
+  },
+  "kind": "Rok"
+}
+
+###

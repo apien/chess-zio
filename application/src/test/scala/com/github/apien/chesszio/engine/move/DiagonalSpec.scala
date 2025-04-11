@@ -1,14 +1,12 @@
 package com.github.apien.chesszio.engine.move
 
-import com.github.apien.chesszio.engine.Square
-import com.github.apien.chesszio.engine.move.Diagonal
 import com.github.apien.chesszio.test.TestDataBuilder
 import zio.Scope
 import zio.test.*
 
 object DiagonalSpec extends ZIOSpecDefault with TestDataBuilder {
 
-  override def spec: Spec[TestEnvironment with Scope, Any] = suite("Diagonal")(
+  override def spec: Spec[TestEnvironment & Scope, Any] = suite("Diagonal")(
     topLeftSuite,
     downRight,
     topRightSuite,
