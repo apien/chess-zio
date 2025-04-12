@@ -7,7 +7,7 @@ import com.github.apien.chesszio.engine.move.MoveError
 import com.github.apien.chesszio.test.TestDataBuilder
 import zio.test.*
 import zio.test.Assertion.{equalTo, fails}
-import zio.{Ref, Scope, ZIO, ZLayer}
+import zio.{Ref, Scope, Task, ZIO, ZLayer}
 
 object ChessServiceSpec extends ZIOSpecDefault with TestDataBuilder {
 
@@ -75,7 +75,11 @@ object ChessServiceSpec extends ZIOSpecDefault with TestDataBuilder {
       ZLayer.fromZIO(Ref.make(initialPieces)) >>> ZLayer.fromFunction(
         new MemoryPiecesRepository(_)
       )
-    repoLayer >+> ChessService.live
+    MemoryActionRepository.live >+> repoLayer >+> ChessService.live
+  }
+
+  class NoActionPublisher extends ActionPublisher {
+    override def produce[A <: Action](action: A): Task[Unit] = ZIO.unit
   }
 
 }

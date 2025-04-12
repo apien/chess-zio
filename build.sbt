@@ -5,7 +5,8 @@ ThisBuild / scalaVersion := "3.6.4"
 lazy val application = (project in file("application"))
   .settings(
     name := "application",
-    libraryDependencies ++= Dependencies.application
+    libraryDependencies ++= Dependencies.application,
+    scalacOptions ++= Seq("-Yretain-trees")
   )
 
 lazy val client = (project in file("client"))

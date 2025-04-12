@@ -4,6 +4,7 @@ import sbt.librarymanagement.ModuleID
 object Dependencies {
   private val tapirVersion = "1.11.23"
   private val ironVersion  = "3.0.0"
+  private val zioVersion   = "2.1.17"
 
   private val config = Seq(
     "com.typesafe"           % "config"          % "1.4.3",
@@ -11,11 +12,12 @@ object Dependencies {
   )
 
   lazy val zio: Seq[ModuleID] = Seq(
-    "dev.zio" %% "zio"               % "2.1.17",
-    "dev.zio" %% "zio-kafka"         % "2.7.4",
-    "dev.zio" %% "zio-test"          % "2.1.17" % Test,
-    "dev.zio" %% "zio-test-sbt"      % "2.1.17" % Test,
-    "dev.zio" %% "zio-test-magnolia" % "2.1.17" % Test
+    "dev.zio" %% "zio"               % zioVersion,
+    "dev.zio" %% "zio-kafka"         % "2.12.0",
+    "dev.zio" %% "zio-streams"       % zioVersion,
+    "dev.zio" %% "zio-test"          % zioVersion % Test,
+    "dev.zio" %% "zio-test-sbt"      % zioVersion % Test,
+    "dev.zio" %% "zio-test-magnolia" % zioVersion % Test
   )
 
   lazy val tapir: Seq[ModuleID] = Seq(
@@ -30,6 +32,6 @@ object Dependencies {
     "io.github.iltotore"          %% "iron-zio-json" % ironVersion
   )
 
-  val application: Seq[ModuleID] = zio ++ tapir ++ iron
+  val application: Seq[ModuleID] = config ++ zio ++ tapir ++ iron
   val client: Seq[ModuleID]      = config ++ zio
 }

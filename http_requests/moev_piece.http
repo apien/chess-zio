@@ -1,10 +1,10 @@
-PUT localhost:8080/api/games/G1/pieces/f19b3d77-2796-4c35-8efc-e1451aef4662
+PUT localhost:8080/api/games/G1/pieces/592ac6aa-6f62-4fc8-a961-9d45618046dd
 Content-Type: application/json
 
 
 {
   "column": 0,
-  "row": 0
+  "row": 3
 }
 
 

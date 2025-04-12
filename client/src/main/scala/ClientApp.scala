@@ -24,7 +24,7 @@ object ClientApp extends ZIOAppDefault with AppConfiguration {
       Serde.string,
       Serde.string
     )
-    .tap { record => ZIO.log(s"Received ${record.key}: ${record.value}") }
+    .tap { record => ZIO.logInfo(s"Received ${record.key}: ${record.value}") }
     .mapZIO(_.offset.commit)
     .provideLayer(consumerLayer)
     .runDrain

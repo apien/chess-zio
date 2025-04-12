@@ -17,5 +17,5 @@ class Endpoints(chessEndpoints: ChessRoutes) {
 }
 
 object Endpoints {
-  val live = ZLayer.fromFunction(Endpoints(_))
+  val live: ZLayer[ChessRoutes, Nothing, Endpoints] = ZLayer.fromFunction(Endpoints(_))
 }
