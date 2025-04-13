@@ -60,11 +60,19 @@ object ChessServiceSpec extends ZIOSpecDefault with TestDataBuilder {
         boardAfterMove <- repository.getAll
       } yield assertTrue(boardAfterMove == expectedBoard) && assert(moveError)(fails(equalTo(MoveError.IllegalMove)))
     }.provideShared(buildLayer()),
-    test("selected piece does not exist") {
+    test("fail with PieceDoesNotExist when selected piece does not exist") {
       for {
         service <- ZIO.service[ChessService]
         result  <- service.move(gameId1, pieceId1, Square(Column.at0, Row.at0)).exit
       } yield assert(result)(fails(equalTo(MoveError.PieceDoesNotExist)))
+    }.provideShared(buildLayer()),
+    test("fail with PieceDoesNotExist when deleted piece has been removed") {
+      for {
+        service   <- ZIO.service[ChessService]
+        rookId    <- service.addPiece(gameId1, Rook, Square(Column.at0, Row.at0)).map(_.id)
+        _         <- service.removePiece(gameId1, rookId)
+        moveError <- service.move(gameId1, rookId, Square(Column.at1, Row.at0)).exit
+      } yield assert(moveError)(fails(equalTo(MoveError.PieceDoesNotExist)))
     }.provideShared(buildLayer())
   )
 

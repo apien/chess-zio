@@ -42,6 +42,7 @@ class ChessEndpoints {
   val movePieceEndpoint: Endpoint[Unit, (GameId, PieceId, Square), ErrorInfo, Unit, Any] =
     basePoundEndpoint.put
       .summary("Move a piece on a board.")
+      .description("It move a piece on a selected board square. It allows only to move not deleted pieces.")
       .in(path[PieceId].name("pieceId") / "move")
       .in(jsonBody[Square].example(Examples.square))
       .out(statusCode(StatusCode.NoContent))

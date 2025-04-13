@@ -28,7 +28,7 @@ class ChessService(
     piecesRepository.getPiece(gameId, pieceId)
 
   def move(gameId: GameId, pieceId: PieceId, destination: Square): IO[MoveError, Unit] = for {
-    pieces <- piecesRepository.getPiecesByGameId(gameId)
+    pieces <- piecesRepository.getActivePiecesByGameId(gameId)
     engine = ChessEngine.build(pieces)
     moveResult <- ZIO.fromEither(engine.move(pieceId, destination))
     _          <- piecesRepository.storeGameState(gameId, moveResult.getState)
