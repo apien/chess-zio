@@ -4,7 +4,7 @@ import com.github.apien.chesszio.ChessService.{PieceDoesNotExist, SquareOccupied
 import Action.{PieceCreated, PieceMoved, PieceRemoved}
 import com.github.apien.chesszio.engine.move.MoveError
 import com.github.apien.chesszio.engine.*
-import com.github.apien.chesszio.engine.PieceType.{Bishop, Rok}
+import com.github.apien.chesszio.engine.PieceType.{Bishop, Rook}
 import zio.{IO, UIO, ZIO, ZLayer}
 
 import java.util.UUID

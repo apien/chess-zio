@@ -4,11 +4,11 @@ import com.github.apien.chesszio.ChessService.{PieceDoesNotExist, SquareOccupied
 import com.github.apien.chesszio.MemoryPiecesRepository.{GamePieceKey, PieceSquareDb}
 import com.github.apien.chesszio.MemoryPiecesRepositorySpec.test
 import com.github.apien.chesszio.engine.*
-import com.github.apien.chesszio.engine.PieceType.{Bishop, Rok}
+import com.github.apien.chesszio.engine.PieceType.{Bishop, Rook}
 import com.github.apien.chesszio.test.TestDataBuilder
 import zio.*
 import zio.test.Assertion.{equalTo, fails}
-import zio.test.{assertTrue, *}
+import zio.test.*
 
 object MemoryPiecesRepositorySpec extends ZIOSpecDefault with TestDataBuilder {
 
@@ -80,7 +80,7 @@ object MemoryPiecesRepositorySpec extends ZIOSpecDefault with TestDataBuilder {
         GamePieceKey(gameId1, pieceId2) -> PieceSquareDb(
           gameId1,
           pieceId2,
-          Rok,
+          Rook,
           deleted = true,
           Square(Column.at1, Row.at1)
         )
@@ -89,7 +89,7 @@ object MemoryPiecesRepositorySpec extends ZIOSpecDefault with TestDataBuilder {
       for {
         repository       <- ZIO.service[MemoryPiecesRepository]
         _                <- repository.addPiece(gameId1, pieceId1, Bishop, Square(Column.at0, Row.at0))
-        _                <- repository.addPiece(gameId1, pieceId2, Rok, Square(Column.at1, Row.at1))
+        _                <- repository.addPiece(gameId1, pieceId2, Rook, Square(Column.at1, Row.at1))
         _                <- repository.removePiece(gameId1, pieceId2)
         stateAfterAction <- repository.getAll
       } yield zio.test.assertTrue(stateAfterAction == expectedMap)
@@ -125,7 +125,7 @@ object MemoryPiecesRepositorySpec extends ZIOSpecDefault with TestDataBuilder {
   private def storeGameStateSuite = suite("storeGameState")(
     test("store a state and do not overwrite deleted pieces") {
       val newState = Map(
-        Square(Column.at6, Row.at6) -> Piece(pieceId2, Rok, deleted = false),
+        Square(Column.at6, Row.at6) -> Piece(pieceId2, Rook, deleted = false),
         Square(Column.at7, Row.at7) -> Piece(pieceId3, Bishop, deleted = false)
       )
 
@@ -140,7 +140,7 @@ object MemoryPiecesRepositorySpec extends ZIOSpecDefault with TestDataBuilder {
         GamePieceKey(gameId1, pieceId2) -> PieceSquareDb(
           gameId1,
           pieceId2,
-          Rok,
+          Rook,
           deleted = false,
           Square(Column.at6, Row.at6)
         ),
@@ -157,7 +157,7 @@ object MemoryPiecesRepositorySpec extends ZIOSpecDefault with TestDataBuilder {
         repository       <- ZIO.service[MemoryPiecesRepository]
         _                <- repository.addPiece(gameId1, pieceId1, Bishop, Square(Column.at0, Row.at0))
         _                <- repository.removePiece(gameId1, pieceId1)
-        _                <- repository.addPiece(gameId1, pieceId2, Rok, Square(Column.at1, Row.at1))
+        _                <- repository.addPiece(gameId1, pieceId2, Rook, Square(Column.at1, Row.at1))
         _                <- repository.addPiece(gameId1, pieceId3, Bishop, Square(Column.at1, Row.at2))
         _                <- repository.storeGameState(gameId1, newState)
         stateAfterAction <- repository.getAll

@@ -3,7 +3,7 @@ package com.github.apien.chesszio.engine
 import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, JsonDecoder, JsonEncoder}
 
 enum PieceType {
-   case Rok, Bishop
+   case Rook, Bishop
 }
 
 object PieceType {

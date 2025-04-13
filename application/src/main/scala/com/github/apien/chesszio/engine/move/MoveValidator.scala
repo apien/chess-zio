@@ -12,7 +12,7 @@ trait MoveValidator {
 
 object MoveValidator {
   def get(pieceType: PieceType): MoveValidator = pieceType match {
-    case engine.PieceType.Rok    => new RookMoveValidator
+    case engine.PieceType.Rook    => new RookMoveValidator
     case engine.PieceType.Bishop => new BishopValidator
   }
 }

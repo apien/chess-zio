@@ -1,6 +1,6 @@
 package com.github.apien.chesszio.engine.move
 
-import com.github.apien.chesszio.engine.PieceType.Rok
+import com.github.apien.chesszio.engine.PieceType.Rook
 import com.github.apien.chesszio.engine.move.RookMoveValidatorSpec.test
 import com.github.apien.chesszio.engine.move.{MoveError, RookMoveValidator}
 import com.github.apien.chesszio.engine.{Board, Piece, Square}
@@ -10,13 +10,13 @@ import zio.test.*
 object RookMoveValidatorSpec extends ZIOSpecDefault with TestDataBuilder {
   private val board = new Board(
     Map(
-      unsafeSquare(3, 1) -> Piece("P1", Rok, false),
-      unsafeSquare(3, 3) -> Piece("P1", Rok, false),
-      unsafeSquare(3, 6) -> Piece("P1", Rok, false),
-      unsafeSquare(2, 3) -> Piece("P1", Rok, false),
-      unsafeSquare(6, 3) -> Piece("P1", Rok, false),
-      unsafeSquare(0, 3) -> Piece("P1", Rok, false),
-      unsafeSquare(0, 7) -> Piece("P1", Rok, false)
+      unsafeSquare(3, 1) -> Piece("P1", Rook, false),
+      unsafeSquare(3, 3) -> Piece("P1", Rook, false),
+      unsafeSquare(3, 6) -> Piece("P1", Rook, false),
+      unsafeSquare(2, 3) -> Piece("P1", Rook, false),
+      unsafeSquare(6, 3) -> Piece("P1", Rook, false),
+      unsafeSquare(0, 3) -> Piece("P1", Rook, false),
+      unsafeSquare(0, 7) -> Piece("P1", Rook, false)
     )
   )
 

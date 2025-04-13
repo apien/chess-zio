@@ -3,7 +3,7 @@ package com.github.apien.chesszio.api
 import com.github.apien.chesszio.api.ErrorInfo.*
 import com.github.apien.chesszio.api.model.{CreatePoundApiRequest, PieceWithSquare}
 import com.github.apien.chesszio.engine.*
-import com.github.apien.chesszio.engine.PieceType.{Bishop, Rok}
+import com.github.apien.chesszio.engine.PieceType.{Bishop, Rook}
 import sttp.model.StatusCode
 import sttp.tapir.SchemaType.SInteger
 import sttp.tapir.generic.auto.*
