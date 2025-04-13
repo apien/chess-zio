@@ -4,7 +4,6 @@ import com.github.apien.chesszio.ChessService
 import com.github.apien.chesszio.ChessService.{PieceDoesNotExist, SquareOccupied}
 import com.github.apien.chesszio.api.model.{CreatePoundApiRequest, PieceWithSquare}
 import com.github.apien.chesszio.engine.move.MoveError
-import com.github.apien.chesszio.engine.{Piece, Square}
 import sttp.tapir.ztapir.*
 import zio.*
 

@@ -9,14 +9,18 @@ import zio.{IO, UIO, ZIO, ZLayer}
 
 import java.util.UUID
 
-class ChessService(piecesRepository: PiecesRepository, actionRepository: ActionRepository) {
+class ChessService(
+  piecesRepository: PiecesRepository,
+  actionRepository: ActionRepository,
+  pieceIdGenerator: () => String,
+  actionIdGenerator: () => ActionId
+) {
 
   def addPiece(gameId: GameId, pieceType: PieceType, square: Square): IO[SquareOccupied, Piece] = {
-    // TODO create a function in the companion object
-    val pieceId = UUID.randomUUID().toString
+    val pieceId = pieceIdGenerator()
     for {
       _ <- piecesRepository.addPiece(gameId, pieceId, pieceType, square = square)
-      _ <- actionRepository.store(PieceCreated(ActionId.generate(), gameId, pieceId, pieceType, square))
+      _ <- actionRepository.store(PieceCreated(actionIdGenerator(), gameId, pieceId, pieceType, square))
     } yield Piece(pieceId, pieceType, false)
   }
 
@@ -46,5 +50,5 @@ object ChessService {
   type PieceDoesNotExist = PieceDoesNotExist.type
 
   val live: ZLayer[PiecesRepository & ActionRepository, Nothing, ChessService] =
-    ZLayer.fromFunction(new ChessService(_, _))
+    ZLayer.fromFunction(new ChessService(_, _,  () => UUID.randomUUID().toString, () => ActionId.generate()))
 }
