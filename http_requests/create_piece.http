@@ -4,9 +4,9 @@ Content-Type: application/json
 {
   "position": {
     "column": 0,
-    "row": 0
+    "row": 4
   },
-  "kind": "Rok"
+  "kind": "Bishop"
 }
 
 ###

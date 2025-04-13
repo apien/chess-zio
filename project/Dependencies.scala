@@ -21,9 +21,11 @@ object Dependencies {
   )
 
   lazy val tapir: Seq[ModuleID] = Seq(
-    "com.softwaremill.sttp.tapir" %% "tapir-zio-http-server"   % tapirVersion,
-    "com.softwaremill.sttp.tapir" %% "tapir-json-zio"          % tapirVersion,
-    "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-bundle" % tapirVersion
+    "com.softwaremill.sttp.tapir"   %% "tapir-zio-http-server"   % tapirVersion,
+    "com.softwaremill.sttp.tapir"   %% "tapir-json-zio"          % tapirVersion,
+    "com.softwaremill.sttp.tapir"   %% "tapir-swagger-ui-bundle" % tapirVersion,
+    "com.softwaremill.sttp.tapir"   %% "tapir-sttp-stub-server"  % tapirVersion % Test,
+    "com.softwaremill.sttp.client3" %% "zio-json"                % "3.11.0"     % Test
   )
 
   lazy val iron: Seq[ModuleID] = Seq(

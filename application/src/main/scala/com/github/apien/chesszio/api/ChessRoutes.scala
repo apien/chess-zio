@@ -4,13 +4,11 @@ import com.github.apien.chesszio.ChessService
 import com.github.apien.chesszio.ChessService.{PieceDoesNotExist, SquareOccupied}
 import com.github.apien.chesszio.api.model.{CreatePoundApiRequest, PieceWithSquare}
 import com.github.apien.chesszio.engine.move.MoveError
-import com.github.apien.chesszio.engine.{Piece, Square}
 import sttp.tapir.ztapir.*
 import zio.*
 
 class ChessRoutes(chessEndpoints: ChessEndpoints, chessService: ChessService) {
 
-  // TODO Implement the logic
   val createPieceRoute: ZServerEndpoint[Any, Any] = chessEndpoints.createPieceEndpoint
     .zServerLogic { case (gameId, CreatePoundApiRequest(square, pieceType)) =>
       chessService
