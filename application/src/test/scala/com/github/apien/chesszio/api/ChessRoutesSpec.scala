@@ -1,6 +1,7 @@
 package com.github.apien.chesszio.api
 
 import com.github.apien.chesszio.MemoryPiecesRepository.{GamePieceKey, PieceSquareDb}
+import com.github.apien.chesszio.api.ChessRoutesSpec.test
 import com.github.apien.chesszio.api.model.{CreatePoundApiRequest, PieceWithSquare}
 import com.github.apien.chesszio.engine.PieceType.{Bishop, Rok}
 import com.github.apien.chesszio.engine.*
@@ -55,7 +56,7 @@ object ChessRoutesSpec extends ZIOSpecDefault {
         Assertion.equalTo(Right(pieceWithSquare))
       }
     }.provideShared(buildLayer(generatePieceId = () => "P1")),
-    test("response with 409 when a requested square is occupied already") {
+    test("response 409 when a requested square is occupied already") {
       for {
         routes       <- ZIO.service[ChessRoutes]
         chessService <- ZIO.service[ChessService]
@@ -67,6 +68,52 @@ object ChessRoutesSpec extends ZIOSpecDefault {
           .response(asJson[PieceWithSquare])
           .send(backendStub(route))
       } yield zio.test.assert(response.code)(Assertion.equalTo(StatusCode.Conflict))
+    }.provideShared(buildLayer()),
+    test("response 400 when a row is out of range <0,7>") {
+      val bodyWithInvalidRow =
+        """
+          |{
+          |  "position": {
+          |    "column": 3,
+          |    "row": 20
+          |  },
+          |  "kind": "Bishop"
+          |}
+          |""".stripMargin
+      for {
+        routes       <- ZIO.service[ChessRoutes]
+        chessService <- ZIO.service[ChessService]
+        _            <- chessService.addPiece(gameId1, Rok, Square(Column.at0, Row.at0))
+        route = routes.createPieceRoute
+        response <- basicRequest
+          .post(uri"http://test.com/api/games/G1/pieces")
+          .body(bodyWithInvalidRow)
+          .response(asJson[PieceWithSquare])
+          .send(backendStub(route))
+      } yield zio.test.assert(response.code)(Assertion.equalTo(StatusCode.BadRequest))
+    }.provideShared(buildLayer()),
+    test("response 400 when a column is out of range <0,7>") {
+      val bodyWithInvalidRow =
+        """
+          |{
+          |  "position": {
+          |    "column": -1,
+          |    "row": 4
+          |  },
+          |  "kind": "Bishop"
+          |}
+          |""".stripMargin
+      for {
+        routes       <- ZIO.service[ChessRoutes]
+        chessService <- ZIO.service[ChessService]
+        _            <- chessService.addPiece(gameId1, Rok, Square(Column.at0, Row.at0))
+        route = routes.createPieceRoute
+        response <- basicRequest
+          .post(uri"http://test.com/api/games/G1/pieces")
+          .body(bodyWithInvalidRow)
+          .response(asJson[PieceWithSquare])
+          .send(backendStub(route))
+      } yield zio.test.assert(response.code)(Assertion.equalTo(StatusCode.BadRequest))
     }.provideShared(buildLayer())
   )
 

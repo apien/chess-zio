@@ -6,29 +6,11 @@ import zio.http.Server
 import zio.{Console, Scope, ZIO, ZIOAppArgs, ZIOAppDefault, ZLayer}
 
 object App extends ZIOAppDefault {
-  val port = 8080
-
-//  type MyApp = ApplicationConfiguration & ChessEndpoints & ChessRoutes & Endpoints & PiecesRepository &
-//    ActionRepository & ActionPublisher & ActionPublisherWorker & ChessService & Server
-//
-//  private val layers: ZLayer[Any, Throwable, MyApp] =
-//    ZLayer.make[MyApp](
-//      ZLayer.fromZIO(ZIO.attempt(ApplicationConfiguration.loadOrThrow())),
-//      MemoryPiecesRepository.live,
-//      MemoryActionRepository.live,
-//      ChessService.live,
-//      ChessEndpoints.live,
-//      ChessRoutes.live,
-//      Endpoints.live,
-//      KafkaActionPublisher.live,
-//      ActionPublisherWorker.live,
-//      Server.defaultWithPort(port)
-//    )
+  private val port = 8080
 
   override def run: ZIO[ZIOAppArgs & Scope, Any, Any] = {
     (for {
       _         <- ZIO.log("Chess-zio start of bootstrap")
-      config    <- ZIO.service[ApplicationConfiguration]
       endpoints <- ZIO.service[Endpoints]
       httpApp = ZioHttpInterpreter(ZioHttpServerOptions.default).toHttp(endpoints.endpoints)
       actualPort <- Server.install(httpApp)

@@ -9,7 +9,6 @@ import zio.*
 
 class ChessRoutes(chessEndpoints: ChessEndpoints, chessService: ChessService) {
 
-  // TODO Implement the logic
   val createPieceRoute: ZServerEndpoint[Any, Any] = chessEndpoints.createPieceEndpoint
     .zServerLogic { case (gameId, CreatePoundApiRequest(square, pieceType)) =>
       chessService
