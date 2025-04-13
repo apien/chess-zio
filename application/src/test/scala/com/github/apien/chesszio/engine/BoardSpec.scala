@@ -1,7 +1,7 @@
 package com.github.apien.chesszio.engine
 
 import BoardSpec.suite
-import PieceType.Rok
+import PieceType.Rook
 import zio.*
 import zio.test.{assert as assertZIO, *}
 
@@ -11,17 +11,17 @@ object BoardSpec extends ZIOSpecDefault {
 
   val board = new Board(
     Map(
-      Square(Column.at0, Row.at3) -> Piece("P1", Rok, false),
-      Square(Column.at1, Row.at3) -> Piece("P2", Rok, false),
-      Square(Column.at3, Row.at3) -> Piece("P3", Rok, false),
-      Square(Column.at4, Row.at3) -> Piece("P4", Rok, false),
-      Square(Column.at6, Row.at3) -> Piece("P5", Rok, false),
-      Square(Column.at7, Row.at3) -> Piece("P6", Rok, false),
+      Square(Column.at0, Row.at3) -> Piece("P1", Rook, false),
+      Square(Column.at1, Row.at3) -> Piece("P2", Rook, false),
+      Square(Column.at3, Row.at3) -> Piece("P3", Rook, false),
+      Square(Column.at4, Row.at3) -> Piece("P4", Rook, false),
+      Square(Column.at6, Row.at3) -> Piece("P5", Rook, false),
+      Square(Column.at7, Row.at3) -> Piece("P6", Rook, false),
 //      Vertically
-      Square(Column.at3, Row.at1) -> Piece("P7", Rok, false),
-      Square(Column.at3, Row.at2) -> Piece("P8", Rok, false),
-      Square(Column.at3, Row.at6) -> Piece("P9", Rok, false),
-      Square(Column.at3, Row.at7) -> Piece("P10", Rok, false)
+      Square(Column.at3, Row.at1) -> Piece("P7", Rook, false),
+      Square(Column.at3, Row.at2) -> Piece("P8", Rook, false),
+      Square(Column.at3, Row.at6) -> Piece("P9", Rook, false),
+      Square(Column.at3, Row.at7) -> Piece("P10", Rook, false)
     )
   )
 
@@ -67,15 +67,15 @@ object BoardSpec extends ZIOSpecDefault {
     test("move a piece on a new location") {
       val board = new Board(
         Map(
-          Square(Column.at0, Row.at0) -> Piece("P1", Rok, false),
-          Square(Column.at3, Row.at4) -> Piece("P2", Rok, false),
-          Square(Column.at6, Row.at2) -> Piece("P3", Rok, false)
+          Square(Column.at0, Row.at0) -> Piece("P1", Rook, false),
+          Square(Column.at3, Row.at4) -> Piece("P2", Rook, false),
+          Square(Column.at6, Row.at2) -> Piece("P3", Rook, false)
         )
       )
       val expectedBoard = Map(
-        Square(Column.at7, Row.at6) -> Piece("P1", Rok, false),
-        Square(Column.at3, Row.at4) -> Piece("P2", Rok, false),
-        Square(Column.at6, Row.at2) -> Piece("P3", Rok, false)
+        Square(Column.at7, Row.at6) -> Piece("P1", Rook, false),
+        Square(Column.at3, Row.at4) -> Piece("P2", Rook, false),
+        Square(Column.at6, Row.at2) -> Piece("P3", Rook, false)
       )
 
       val boardAfterMove = board.move(Square(Column.at0, Row.at0), Square(Column.at7, Row.at6)).getBoardState

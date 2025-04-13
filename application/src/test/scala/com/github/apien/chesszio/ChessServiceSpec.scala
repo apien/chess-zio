@@ -2,7 +2,7 @@ package com.github.apien.chesszio
 
 import com.github.apien.chesszio.MemoryPiecesRepository.{GamePieceKey, PieceSquareDb}
 import com.github.apien.chesszio.engine.*
-import com.github.apien.chesszio.engine.PieceType.Rok
+import com.github.apien.chesszio.engine.PieceType.Rook
 import com.github.apien.chesszio.engine.move.MoveError
 import com.github.apien.chesszio.test.TestDataBuilder
 import zio.test.*
@@ -25,13 +25,13 @@ object ChessServiceSpec extends ZIOSpecDefault with TestDataBuilder {
     test("store a new state of board after a successful move") {
       for {
         service <- ZIO.service[ChessService]
-        rookId  <- service.addPiece(gameId1, Rok, Square(Column.at0, Row.at0)).map(_.id)
+        rookId  <- service.addPiece(gameId1, Rook, Square(Column.at0, Row.at0)).map(_.id)
         _       <- service.move(gameId1, rookId, Square(Column.at7, Row.at0))
         expectedBoard = Map(
           GamePieceKey(gameId1, rookId) -> PieceSquareDb(
             gameId1,
             rookId,
-            Rok,
+            Rook,
             deleted = false,
             Square(Column.at7, Row.at0)
           )
@@ -44,13 +44,13 @@ object ChessServiceSpec extends ZIOSpecDefault with TestDataBuilder {
     test("do not modify state in case of invalid move") {
       for {
         service   <- ZIO.service[ChessService]
-        rookId    <- service.addPiece(gameId1, Rok, Square(Column.at0, Row.at0)).map(_.id)
+        rookId    <- service.addPiece(gameId1, Rook, Square(Column.at0, Row.at0)).map(_.id)
         moveError <- service.move(gameId1, rookId, Square(Column.at1, Row.at1)).exit
         expectedBoard = Map(
           GamePieceKey(gameId1, rookId) -> PieceSquareDb(
             gameId1,
             rookId,
-            Rok,
+            Rook,
             deleted = false,
             Square(Column.at0, Row.at0)
           )

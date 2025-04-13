@@ -36,9 +36,9 @@ trait TestDataBuilder {
   }
 
   def buildPiece(
-    id: PieceId = UUID.randomUUID().toString,
-    kind: PieceType = PieceType.Rok,
-    deleted: Boolean = false
+                  id: PieceId = UUID.randomUUID().toString,
+                  kind: PieceType = PieceType.Rook,
+                  deleted: Boolean = false
   ): Piece = Piece(id, kind, deleted)
 
 }

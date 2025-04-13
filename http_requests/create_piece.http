@@ -1,4 +1,4 @@
-POST localhost:8080/api/games/G1/pieces
+POST localhost:8080/api/games/G2/pieces
 Content-Type: application/json
 
 {

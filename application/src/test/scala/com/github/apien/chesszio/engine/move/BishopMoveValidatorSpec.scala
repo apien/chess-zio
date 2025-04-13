@@ -1,6 +1,6 @@
 package com.github.apien.chesszio.engine.move
 
-import com.github.apien.chesszio.engine.PieceType.Rok
+import com.github.apien.chesszio.engine.PieceType.Rook
 import com.github.apien.chesszio.engine.move.BishopMoveValidatorSpec.suite
 import com.github.apien.chesszio.engine.move.MoveError.IllegalMove
 import com.github.apien.chesszio.engine.move.RookMoveValidatorSpec.test
@@ -12,11 +12,11 @@ import zio.test.*
 object BishopMoveValidatorSpec extends ZIOSpecDefault with TestDataBuilder {
   private val board = new Board(
     Map(
-      unsafeSquare(3, 3) -> Piece("P1", Rok, false),
-      unsafeSquare(5, 1) -> Piece("P1", Rok, false),
-      unsafeSquare(1, 1) -> Piece("P1", Rok, false),
-      unsafeSquare(6, 6) -> Piece("P1", Rok, false),
-      unsafeSquare(1, 5) -> Piece("P1", Rok, false)
+      unsafeSquare(3, 3) -> Piece("P1", Rook, false),
+      unsafeSquare(5, 1) -> Piece("P1", Rook, false),
+      unsafeSquare(1, 1) -> Piece("P1", Rook, false),
+      unsafeSquare(6, 6) -> Piece("P1", Rook, false),
+      unsafeSquare(1, 5) -> Piece("P1", Rook, false)
     )
   )
 

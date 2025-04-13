@@ -3,7 +3,7 @@ package com.github.apien.chesszio.api
 import com.github.apien.chesszio.MemoryPiecesRepository.{GamePieceKey, PieceSquareDb}
 import com.github.apien.chesszio.api.ChessRoutesSpec.test
 import com.github.apien.chesszio.api.model.{CreatePoundApiRequest, PieceWithSquare}
-import com.github.apien.chesszio.engine.PieceType.{Bishop, Rok}
+import com.github.apien.chesszio.engine.PieceType.{Bishop, Rook}
 import com.github.apien.chesszio.engine.*
 import com.github.apien.chesszio.{ActionId, ChessService, MemoryActionRepository, MemoryPiecesRepository}
 import sttp.client3.testing.SttpBackendStub
@@ -60,7 +60,7 @@ object ChessRoutesSpec extends ZIOSpecDefault {
       for {
         routes       <- ZIO.service[ChessRoutes]
         chessService <- ZIO.service[ChessService]
-        _            <- chessService.addPiece(gameId1, Rok, Square(Column.at0, Row.at0))
+        _            <- chessService.addPiece(gameId1, Rook, Square(Column.at0, Row.at0))
         route = routes.createPieceRoute
         response <- basicRequest
           .post(uri"http://test.com/api/games/G1/pieces")
@@ -83,7 +83,7 @@ object ChessRoutesSpec extends ZIOSpecDefault {
       for {
         routes       <- ZIO.service[ChessRoutes]
         chessService <- ZIO.service[ChessService]
-        _            <- chessService.addPiece(gameId1, Rok, Square(Column.at0, Row.at0))
+        _            <- chessService.addPiece(gameId1, Rook, Square(Column.at0, Row.at0))
         route = routes.createPieceRoute
         response <- basicRequest
           .post(uri"http://test.com/api/games/G1/pieces")
@@ -106,7 +106,7 @@ object ChessRoutesSpec extends ZIOSpecDefault {
       for {
         routes       <- ZIO.service[ChessRoutes]
         chessService <- ZIO.service[ChessService]
-        _            <- chessService.addPiece(gameId1, Rok, Square(Column.at0, Row.at0))
+        _            <- chessService.addPiece(gameId1, Rook, Square(Column.at0, Row.at0))
         route = routes.createPieceRoute
         response <- basicRequest
           .post(uri"http://test.com/api/games/G1/pieces")
